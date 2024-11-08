@@ -43,6 +43,21 @@
 </form>
 
 
+<h2 style="text-align: center;">Enter Grades</h2>
+            <form method="post" class="form-group">
+                <label for="txtPrelim">Prelim:</label>
+                <input type="number" class="form-control" name="txtprelim" id="txtprelim" min="0" max="99" required>
+
+                <label for="txtMidterm">Midterm:</label>
+                <input type="number" class="form-control" name="txtmidterm" id="txtmidterm" required min="0" max="99">
+
+                <label for="txtFinal">Final:</label>
+                <input type="number" class="form-control" name="txtFinal" id="txtFinal" min="0" max="99" required><br>
+
+                <button type="submit" class="btn btn-success" name="btnSubmit">Submit Grades</button>
+            </form>
+
+
     
 </body>
 </html>
