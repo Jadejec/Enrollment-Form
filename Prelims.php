@@ -1,3 +1,48 @@
+<?php
+session_start(); 
+
+$showEnrollmentForm = true; 
+$showGradeSection = false;
+$showStudentInfo = false; 
+
+
+if (isset($_POST['btnSend'])) {
+    $showEnrollmentForm = false; 
+    $showGradeSection = true; 
+    $_SESSION['firstName'] = $_POST['txtFirstname'];
+    $_SESSION['lastName'] = $_POST['txtLastname'];
+    $_SESSION['age'] = $_POST['txtNumber'];
+    $_SESSION['gender'] = isset($_POST['radSex']) ? $_POST['radSex'] : '';
+    $_SESSION['course'] = $_POST['dlstCourse'];
+    $_SESSION['email'] = $_POST['txtEmail'];
+}
+
+
+if (isset($_POST['btnSubmit'])) {
+    $prelim = $_POST['txtprelim'];
+    $midterm = $_POST['txtmidterm'];
+    $final = $_POST['txtFinal'];
+
+    $average = ($prelim + $midterm + $final) / 3;
+
+   
+    $_SESSION['prelim'] = $prelim;
+    $_SESSION['midterm'] = $midterm;
+    $_SESSION['final'] = $final;
+    $_SESSION['average'] = $average;
+
+   
+    if ($average >= 74.5) {
+        $_SESSION['status'] = '-  Passed';
+        $_SESSION['statusColor'] = 'green'; 
+    } else {
+        $_SESSION['status'] = '-  Failed';
+        $_SESSION['statusColor'] = 'red'; 
+    }
+
+    $showStudentInfo = true; 
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +52,7 @@
 </head>
 <body>
 
-
+<?php if ($showEnrollmentForm) { ?>
 <form method="post" class="form-group">
     <label for="txtFirstname">First Name</label>
     <input type="text" class="form-control" name="txtFirstname" id="txtFirstname" autofocus required>
@@ -41,8 +86,9 @@
 
     <button type="submit" class="btn btn-primary" name="btnSend">Submit Student Information</button><br><br>
 </form>
+<?php } ?>
 
-
+<?php if ($showGradeSection) { ?>
 <h2 style="text-align: center;">Enter Grades</h2>
             <form method="post" class="form-group">
                 <label for="txtPrelim">Prelim:</label>
@@ -56,8 +102,35 @@
 
                 <button type="submit" class="btn btn-success" name="btnSubmit">Submit Grades</button>
             </form>
+            <?php } ?>
 
+<?php if ($showStudentInfo) { ?>
+            <div class="student-info">
+                <h2>Student Details</h2>
+                <p><strong>First Name:</strong> <?php echo $_SESSION['firstName']; ?></p>
+                <p><strong>Last Name:</strong> <?php echo $_SESSION['lastName']; ?></p>
+                <p><strong>Age:</strong> <?php echo $_SESSION['age']; ?></p>
+                <p><strong>Gender:</strong> <?php echo $_SESSION['gender']; ?></p>
+                <p><strong>Course:</strong> <?php echo $_SESSION['course']; ?></p>
+                <p><strong>Email:</strong> <?php echo $_SESSION['email']; ?></p>
+            </div>
 
+            <div class="grades">
+                <h2>Grades</h2>
+                <p><strong>Prelim :</strong> <?php echo $_SESSION['prelim']; ?></p>
+                <p><strong>Midterm :</strong> <?php echo $_SESSION['midterm']; ?></p>
+                <p><strong>Final :</strong> <?php echo $_SESSION['final']; ?></p>
+
+                <h3>Average Grade</h3>
+                <div style="display: inline-block; margin-right: 10px;">
+                <?php echo isset($_SESSION['average']) ? number_format($_SESSION['average'], 2) : ' '; ?>
+                </div>
+                <div style="display: inline-block; color: <?php echo isset($_SESSION['statusColor']) ? $_SESSION['statusColor'] : 'black'; ?>;">
+                <?php echo isset($_SESSION['status']) ? $_SESSION['status'] : ''; ?>
+                </div>  
+                </p>
+            </div>
+            <?php } ?>
     
 </body>
 </html>
