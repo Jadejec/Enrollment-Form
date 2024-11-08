@@ -48,9 +48,24 @@ if (isset($_POST['btnSubmit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <title>Student Enrollment and Grade Processing System</title>
+    <style>
+        .centered-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .student-info,
+        .grades {
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
+<div class="centered-content">
+        <h2 style="text-align: center;">Student Enrollment and Grade Processing System</h2>
+        <h4 style="text-align: left;">Student Enrollment Form</h4>
+
 
 <?php if ($showEnrollmentForm) { ?>
 <form method="post" class="form-group">
@@ -131,6 +146,7 @@ if (isset($_POST['btnSubmit'])) {
                 </p>
             </div>
             <?php } ?>
+            <script type="text/javascript" href="js/bootstrap.js"></script>
     
 </body>
 </html>
